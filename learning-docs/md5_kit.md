@@ -1,7 +1,10 @@
 # MessageDigest  
+
 java内置的加密功能之一，主要功能是将输入数据转为固定长度的哈希值。  
 常用哈希算法有，MD5, SHA-1, SHA-256。
+
 ## 使用方法
+
 1. 引入依赖  
 MessageDigest位于java.security包中。引入语句为：  
 `import java.security.MessageDigest;`  
