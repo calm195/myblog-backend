@@ -137,7 +137,53 @@
     - `MutablePair<L, R>`：可变的键值对
     - `Triple<L, M, R>`：三元组
     - `ImmutableTriple<L, M, R>`：不可变的三元组
-    - `MutableTriple<L, M, R>`：可变的三元组 
+    - `MutableTriple<L, M, R>`：可变的三元组
+
+14. `Synchornized`关键字：同步锁
+
+    > 1. 一把锁只能同时被一个线程获取
+    > 2. 每个对象都有一个锁，相互之间不影响
+        > 锁对象是*.class或修饰的方法是静态方法时，锁住的是整个类，所有对象共享一把锁
+    > 3. 修饰的方法无论正常执行还是异常退出，都会释放锁
+
+    - 两种形式
+      - 代码块形式：修饰非静态方法，默认锁住的是当前对象 **(this)**
+        例如：`synchronized(this) {}`
+        可以自定义锁对象，例如：`synchronized(obj) {}`
+        当自定义锁对象为*.class时，锁住的是整个类
+        例如：`synchronized(MyClass.class) {}`
+      - 方法锁形式：修饰普通方法，默认锁住的是当前对象 **(this)**
+        例如：`public synchronized void method() {}`
+        修饰静态方法，默认锁住的是整个类
+        例如：`public static synchronized void method() {}`
+
+15. `java.util.regex`：正则表达式包
+    - `Pattern`：编译正则表达式后创建一个对应的匹配模式
+      - 声明：`public final class Pattern implements java.io.Serializable`
+      - 方法 compile()：`Pattern Pattern.compile(String regex, int flag)`
+      - 方法 compile()：`Pattern compile(String regex)` 默认为单行匹配模式
+      - flag的取值范围，Pattern.*。
+        > 在表达式里插入记号可以启用模式，在哪里插入就会在哪里启用，并且可以使用`|`配合使用。
+
+        | 字段 | 说明 |
+        | :--- | :--- |
+        | UNIX_LINES |  unix行模式，大多数系统的行都是以\n结尾的，但是少数系统，比如Windows，却是以\r\n组合来结尾的，启用这个模式之后，将会只以\n作为行结束符，这会影响到^、$和点号(点号匹配换行符)。通过嵌入式标志表达式 (?d) 也可以启用 Unix 行模式。|
+        | CASE_INSENSITIVE | 默认情况下，大小写不敏感的匹配只适用于US-ASCII字符集。这个标志能让表达式忽略大小写进行匹配。要想对Unicode字符进行大小不明感的匹配，只要将UNICODE_CASE与这个标志合起来就行了。通过嵌入式标志表达式(?i)也可以启用不区分大小写的匹配。指定此标志可能对性能产生一些影响。|
+        | COMMENTS |  这种模式下，匹配时会忽略(正则表达式里的)空格字符（不是指表达式里的”//s”，而是指表达式里的空格，tab，回车之类）和注释（从#开始，一直到这行结束）。通过嵌入式标志表达式(?x) 也可以启用注释模式。|
+        | MULTILINE | 默认情况下，输入的字符串被看作是一行，即便是这一行中包好了换行符也被看作一行。当匹配“^”到“$”之间的内容的时候，整个输入被看成一个一行。启用多行模式之后，包含换行符的输入将被自动转换成多行，然后进行匹配。通过嵌入式标志表达式 (?m) 也可以启用多行模式。 |
+        | LITERAL |  启用字面值解析模式。指定此标志后，指定模式的输入字符串就会作为字面值字符序列来对待。输入序列中的元字符或转义序列不具有任何特殊意义。标志CASE_INSENSITIVE 和 UNICODE_CASE 在与此标志一起使用时将对匹配产生影响。其他标志都变得多余了。不存在可以启用字面值解析的嵌入式标志字符。 |
+        | DOTALL | 在这种模式中，表达式 .可以匹配任何字符，包括行结束符。默认情况下，此表达式不匹配行结束符。通过嵌入式标志表达式 (?s) 也可以启用此种模式（s 是 “single-line” 模式的助记符，在 Perl 中也使用它）。 |
+        | UNICODE_CASE | 在这个模式下，如果你还启用了CASE_INSENSITIVE标志，那么它会对Unicode字符进行大小写不敏感的匹配。默认情况下，大小写不明感的匹配只适用于US-ASCII字符集。指定此标志可能对性能产生影响。|
+        | CANON_EQ | 当且仅当两个字符的正规分解(canonical decomposition)都完全相同的情况下，才认定匹配。比如用了这个标志之后，表达式a/u030A会匹配?。默认情况下，不考虑规范相等性(canonical equivalence)。指定此标志可能对性能产生影响。 |
+      - `Matcher`：使用`Pattern`实例提供的正则表达式对目标字符串进行搜索
+        - 声明：`public final class Matcher extends Object implements MatchResult`
+        - 方法
+          - 创建实例对象，一般由Pattern创建：`Matcher matcher = xxxParttern.matcher(String targetString);`
+          - `boolean find()`：对目标字符串进行匹配
+          - `boolean find(int start)`：对目标字符串从`start`位置开始匹配
+          - `int start()`：返回当前匹配到的字符串在原目标字符串中的起始索引位置
+          - `int end()`：返回当前匹配到的字符串在原目标字符串中的末尾索引位置
+          - `Pattern pattern()`：也可以返回创建本实例的`Pattern`
 
 ## 内存模型
 
