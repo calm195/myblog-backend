@@ -116,6 +116,29 @@
     - `maxMemory()`方法：返回JVM的最大内存量
     - `gc()`方法：运行垃圾回收器
 
+12. `@FunctionalInterface`注解：函数式接口
+    - 只有一个抽象方法的接口，可以使用`@FunctionalInterface`注解标记
+    - 可以使用lambda表达式来实现函数式接口
+    - 比如`Runnable`、`Callable`、`Comparator`等
+    - `@FunctionalInterface`注解不是必须的，但是推荐使用，可以让编译器检查接口是否符合函数式接口的标准
+
+        ```java
+        @FunctionalInterface
+        public interface MyInterface {
+            void method();
+        }
+        ```
+
+13. java组件类
+    这里表述的是包`org.apache.commons.lang3.tuple`中的组件类
+    > 它们不是标准的javaBean，序列化和反序列化会有问题，一般用于系统内部数据传递，不要用于RPC、HTTP等外部传输。
+    - `Pair<L, R>`：键值对
+    - `ImmutablePair<L, R>`：不可变的键值对
+    - `MutablePair<L, R>`：可变的键值对
+    - `Triple<L, M, R>`：三元组
+    - `ImmutableTriple<L, M, R>`：不可变的三元组
+    - `MutableTriple<L, M, R>`：可变的三元组 
+
 ## 内存模型
 
 Java内存模型规定了所有的变量都存储在主内存中，每个线程都有自己的工作内存，线程的工作内存中保存了该线程使用到的变量的副本。  

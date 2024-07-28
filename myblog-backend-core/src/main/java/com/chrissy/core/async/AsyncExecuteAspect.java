@@ -21,7 +21,7 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * @author chrissy
- * @description
+ * @description 自定义切面AsyncExecute的后台处理机
  * @date 2024/7/24 23:18
  */
 
