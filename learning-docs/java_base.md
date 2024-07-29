@@ -175,15 +175,39 @@
         | DOTALL | 在这种模式中，表达式 .可以匹配任何字符，包括行结束符。默认情况下，此表达式不匹配行结束符。通过嵌入式标志表达式 (?s) 也可以启用此种模式（s 是 “single-line” 模式的助记符，在 Perl 中也使用它）。 |
         | UNICODE_CASE | 在这个模式下，如果你还启用了CASE_INSENSITIVE标志，那么它会对Unicode字符进行大小写不敏感的匹配。默认情况下，大小写不明感的匹配只适用于US-ASCII字符集。指定此标志可能对性能产生影响。|
         | CANON_EQ | 当且仅当两个字符的正规分解(canonical decomposition)都完全相同的情况下，才认定匹配。比如用了这个标志之后，表达式a/u030A会匹配?。默认情况下，不考虑规范相等性(canonical equivalence)。指定此标志可能对性能产生影响。 |
-      - `Matcher`：使用`Pattern`实例提供的正则表达式对目标字符串进行搜索
+    - `Matcher`：使用`Pattern`实例提供的正则表达式对目标字符串进行搜索
         - 声明：`public final class Matcher extends Object implements MatchResult`
         - 方法
-          - 创建实例对象，一般由Pattern创建：`Matcher matcher = xxxParttern.matcher(String targetString);`
-          - `boolean find()`：对目标字符串进行匹配
-          - `boolean find(int start)`：对目标字符串从`start`位置开始匹配
-          - `int start()`：返回当前匹配到的字符串在原目标字符串中的起始索引位置
-          - `int end()`：返回当前匹配到的字符串在原目标字符串中的末尾索引位置
-          - `Pattern pattern()`：也可以返回创建本实例的`Pattern`
+            - 创建实例对象，一般由Pattern创建：`Matcher matcher = xxxParttern.matcher(String targetString);`
+            - `boolean find()`：对目标字符串进行匹配
+            - `boolean find(int start)`：对目标字符串从`start`位置开始匹配
+            - `int start()`：返回当前匹配到的字符串在原目标字符串中的起始索引位置
+            - `int end()`：返回当前匹配到的字符串在原目标字符串中的末尾索引位置
+            - `Pattern pattern()`：也可以返回创建本实例的`Pattern`
+16. `Enumeration`接口：枚举接口
+      - 声明：`public interface Enumeration<E>`
+      - 方法
+        - `boolean hasMoreElements()`：测试此枚举是否包含更多的元素
+        - `E nextElement()`：如果此枚举对象至少还有一个可提供的元素，则返回此枚举的下一个元素
+
+17. `Optional`类：用于解决空指针异常
+    - 声明：`public final class Optional<T>`
+    - 方法
+      - `static <T> Optional<T> empty()`：返回一个空的Optional实例
+      - `static <T> Optional<T> of(T value)`：返回一个指定非null值的Optional实例
+      - `static <T> Optional<T> ofNullable(T value)`：返回一个指定值的Optional实例，如果值为null，则返回一个空的Optional实例
+      - `T get()`：如果值存在，返回值，否则抛出NoSuchElementException异常
+      - `boolean isPresent()`：如果值存在，返回true，否则返回false
+      - `void ifPresent(Consumer<? super T> consumer)`：如果值存在，则执行consumer，否则不执行
+      - `T orElse(T other)`：如果值存在，返回值，否则返回other
+      - `T orElseGet(Supplier<? extends T> other)`：如果值存在，返回值，否则返回other提供的值
+      - `T orElseThrow(Supplier<? extends X> exceptionSupplier)`：如果值存在，返回值，否则抛出由exceptionSupplier提供的异常
+
+18. `Consumer`接口：消费者接口
+    - 声明：`public interface Consumer<T>`
+    - 方法
+      - `void accept(T t)`：接受一个输入参数并且无返回值
+      - `default Consumer<T> andThen(Consumer<? super T> after)`：返回一个组合的Consumer，依次执行当前Consumer和after Consumer
 
 ## 内存模型
 
