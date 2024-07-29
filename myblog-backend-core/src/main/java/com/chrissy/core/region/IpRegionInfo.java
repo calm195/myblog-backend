@@ -39,6 +39,13 @@ public class IpRegionInfo {
         isp = "0".equals(cells[4]) ? "" : cells[4];
     }
 
+    /**
+     * 将IpRegionInfo转化为区域信息 <p>
+     * 若在国内，大陆，则返回 省-城市 <p>
+     * 若在国内，非大陆，则返回 国家-行政区 <p>
+     * 若在国外，      则返回 国家-省份 <p>
+     * @return 区域信息字符串
+     */
     public String toRegionStr() {
         if (Objects.equals(country, "中国")) {
             // 大陆，返回省 + 城市

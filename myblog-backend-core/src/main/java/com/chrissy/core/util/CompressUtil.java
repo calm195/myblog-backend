@@ -1,7 +1,5 @@
 package com.chrissy.core.util;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author chrissy
  * @description 数据压缩工具类

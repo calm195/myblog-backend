@@ -36,6 +36,11 @@ public class MarkdownUtil {
         private String url;
     }
 
+    /**
+     * 从markdown中获取image信息
+     * @param content markdown原文
+     * @return MarkdownImage列表对象
+     */
     public static List<MarkdownImage> loadImages(String content) {
         Matcher matcher = IMG_PATTERN.matcher(content);
         List<MarkdownImage> list = new ArrayList<>();
@@ -45,6 +50,11 @@ public class MarkdownUtil {
         return list;
     }
 
+    /**
+     * 将markdown转为html
+     * @param markdown markdown原文
+     * @return html字符串
+     */
     public static String markdownToHtml(String markdown) {
         // 创建一个 MutableDataSet 对象来配置 Markdown 解析器的选项
         MutableDataSet options = new MutableDataSet();

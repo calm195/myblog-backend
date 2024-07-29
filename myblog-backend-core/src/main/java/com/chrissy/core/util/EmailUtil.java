@@ -16,6 +16,10 @@ import javax.mail.internet.MimeMessage;
 public class EmailUtil {
     private static volatile String from;
 
+    /**
+     * 获取默认发送者邮箱，同步加锁
+     * @return 邮箱字符串
+     */
     private static String getFrom(){
         if (from == null){
             synchronized (EmailUtil.class){
@@ -28,6 +32,13 @@ public class EmailUtil {
         return from;
     }
 
+    /**
+     * 发送邮件
+     * @param title 邮件标题
+     * @param to 接受者
+     * @param content 邮件内容
+     * @return 是否发送成功
+     */
     public static boolean sendMail(String title, String to, String content) {
         try {
             JavaMailSender javaMailSender = SpringUtil.getBean(JavaMailSender.class);
@@ -39,6 +50,7 @@ public class EmailUtil {
             mimeMessageHelper.setText(content, true);
             Thread.currentThread().setContextClassLoader(EmailUtil.class.getClassLoader());
             javaMailSender.send(mimeMessage);
+            log.info("send email successfully");
             return true;
         } catch (Exception ex){
             log.warn("send email error {}@{}, {}", title, to, ex.toString());

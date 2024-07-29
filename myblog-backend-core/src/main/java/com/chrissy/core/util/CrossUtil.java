@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2024/7/28 14:01
  */
 public class CrossUtil {
+    /**
+     * 根据传入的HttpServletRequest和HttpServletResponse，构建允许跨域的response
+     * @param request 请求
+     * @param response 响应
+     */
     public static void buildCors(HttpServletRequest request, HttpServletResponse response) {
         String origin = request.getHeader("Origin");
         if (StringUtils.isBlank(origin)) {

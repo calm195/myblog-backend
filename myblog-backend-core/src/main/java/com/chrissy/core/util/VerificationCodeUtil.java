@@ -22,6 +22,11 @@ public class VerificationCodeUtil {
             "234", "345", "456", "567", "678", "789"
     );
 
+    /**
+     * 根据备选码产生验证码，验证码为三位自然数 201-999
+     * @param cnt 备选码
+     * @return 验证码字符串
+     */
     public static String genCode(int cnt) {
         if (cnt >= SPECIAL_CODES.size()) {
             int num = RANDOM.nextInt(1000);
@@ -35,6 +40,11 @@ public class VerificationCodeUtil {
         }
     }
 
+    /**
+     * 判断是否是合规的验证码
+     * @param content 代验证字符串
+     * @return 是否合规
+     */
     public static boolean isVerifyCode(String content) {
         if (!NumberUtils.isDigits(content) || content.length() != CODE_LEN) {
             return false;

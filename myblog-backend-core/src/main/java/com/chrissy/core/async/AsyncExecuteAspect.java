@@ -32,6 +32,12 @@ public class AsyncExecuteAspect implements ApplicationContextAware {
     private ExpressionParser parser;
     private ApplicationContext applicationContext;
 
+    /**
+     * 超时执行兜底策略
+     * @param joinPoint 切入点
+     * @param asyncExecute 注解信息
+     * @return 超时处理后结果
+     */
     private Object defaultResponseWhenTimeOut(ProceedingJoinPoint joinPoint, AsyncExecute asyncExecute) {
         StandardEvaluationContext context = new StandardEvaluationContext();
         context.setBeanResolver(new BeanFactoryResolver(this.applicationContext));
@@ -46,6 +52,13 @@ public class AsyncExecuteAspect implements ApplicationContextAware {
         return parser.parseExpression(asyncExecute.timeOutResponse()).getValue(context);
     }
 
+    /**
+     * 注解处理逻辑
+     * @param joinPoint 实际的处理逻辑
+     * @param asyncExecute 注解信息
+     * @return 处理后结果
+     * @throws Throwable 抛出RuntimeException错误
+     */
     @Around("@annotation(asyncExecute)")
     public Object handle(ProceedingJoinPoint joinPoint, AsyncExecute asyncExecute) throws Throwable{
         if (!asyncExecute.turnOnAsync()){
@@ -71,6 +84,11 @@ public class AsyncExecuteAspect implements ApplicationContextAware {
         }
     }
 
+    /**
+     * 设置应用上下文信息和初始化SpEL解释器
+     * @param applicationContext 应用上下文信息
+     * @throws BeansException Bean错误
+     */
     @Override
     public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
         this.parser = new SpelExpressionParser();

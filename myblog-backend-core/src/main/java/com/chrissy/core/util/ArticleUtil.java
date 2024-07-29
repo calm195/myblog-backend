@@ -17,6 +17,11 @@ public class ArticleUtil {
     private static final Pattern CONTENT_PATTERN = Pattern.compile("[0-9a-zA-Z\u4e00-\u9fa5:;\"'<>,.?/·~！：；“”‘’《》，。？、（）]");
     private static final Pattern HTML_TAG_PATTERN = Pattern.compile("<[^>]+>");
 
+    /**
+     * 获取文章中文字部分，移除所有链接，html标签，图片
+     * @param summary 文章原始信息
+     * @return 文章文字部分
+     */
     public static String pickSummary(String summary) {
         if (StringUtils.isBlank(summary)) {
             return StringUtils.EMPTY;
