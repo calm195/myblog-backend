@@ -209,6 +209,19 @@
       - `void accept(T t)`：接受一个输入参数并且无返回值
       - `default Consumer<T> andThen(Consumer<? super T> after)`：返回一个组合的Consumer，依次执行当前Consumer和after Consumer
 
+19. `Random`类：随机数类
+    - 声明：`public class Random extends Object implements Serializable`
+    - 方法
+      - `int nextInt()`：返回一个随机整数
+      - `int nextInt(int bound)`：返回一个随机整数，范围在0（包括）到bound（不包括）之间
+      - `long nextLong()`：返回一个随机长整数
+      - `double nextDouble()`：返回一个随机双精度浮点数
+      - `void nextBytes(byte[] bytes)`：生成随机字节并将其放入用户提供的字节数组中
+
+20. `RandomAccess`接口：随机访问接口
+    - 声明：`public interface RandomAccess`
+    - 无任何定义方法以及属性，用于标记实现了该接口的类支持随机访问，即可以通过索引访问元素，比如`ArrayList`支持随机访问，`LinkedList`不支持随机访问
+
 ## 内存模型
 
 Java内存模型规定了所有的变量都存储在主内存中，每个线程都有自己的工作内存，线程的工作内存中保存了该线程使用到的变量的副本。  

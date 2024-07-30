@@ -83,3 +83,24 @@
     - `void setReceiveBufferSize(int size)`：设置数据包套接字的接收缓冲区大小
     - `int getReceiveBufferSize()`：获取数据包套接字的接收缓冲区大小
     - `void setReuseAddress(boolean on)`：设置数据包套接字的地址复用
+
+5. ServerSocket
+
+    ServerSocket类表示服务器套接字，包含服务器的地址和端口号。该类提供了接收客户端连接的方法，如可以接收客户端连接、获取客户端套接字等。
+    - `ServerSocket(int port)`：创建服务器套接字，绑定到指定端口
+    - `ServerSocket(int port, int backlog)`：创建服务器套接字，绑定到指定端口，指定客户连接请求队列的长度
+    - `ServerSocket(int port, int backlog, InetAddress bindAddr)`：创建服务器套接字，绑定到指定端口，指定服务器要绑定的地址
+    - `bind(SocketAddress endpoint)`：绑定服务器套接字到指定的套接字地址
+    - `bind(SocketAddress endpoint, int backlog)`：绑定服务器套接字到指定的套接字地址，指定客户连接请求队列的长度
+    - `boolean isBound()`：判断服务器套接字是否已经绑定，只要 ServerSocket 已经与一个端口绑定, 即使它已经被关闭, isBound() 方法也会返回 true
+    - `Socket accept()`：接收客户端连接，从连接请求队列中取出一个客户的连接请求, 然后创建与客户连接的 Socket 对象, 并将它返回. 如果队列中没有连接请求, accept() 方法就会一直等待, 直到接收到了连接请求才返回.
+    - `void close()`：关闭服务器套接字，服务器释放占用的端口, 并且断开与所有客户的连接
+    - `boolean isClosed()`：判断服务器套接字是否已经关闭，只有执行了 ServerSocket 的 close()方法, isClosed() 方法才返回 true; 否则, 即使 ServerSocket 还没有和特定端口绑定, isClosed() 也会返回 false
+    - `InetAddress getInetAddress()`：获取服务器套接字的地址
+    - `int getLocalPort()`：获取服务器套接字的端口
+    - `int getSoTimeout()`：获取服务器套接字的超时时间
+    - `void setSoTimeout(int timeout)`：设置服务器套接字的超时时间
+    - `void setReuseAddress(boolean on)`：设置服务器套接字的地址复用，如果网络上仍然有数据向旧的 ServerSocket 传输数据, 是否允许新的 ServerSocket 绑定到与旧的 ServerSocket 同样的端口上。
+       > serverSocket.setReuseAddress(true) 方法必须在 ServerSocket 还没有绑定到一个本地端口之前调用, 否则执行 serverSocket.setReuseAddress(true) 方法无效. 此外, 两个共用同一个端口的进程必须都调用 serverSocket.setResuseAddress(true) 方法, 才能使得一个进程关闭 ServerSocket 后, 另一个进程的 ServerSocket 还能够立刻重用相同的端口.
+    - `void setReceiveBufferSize(int size)`：设置服务器套接字的接收缓冲区大小
+    - `int getReceiveBufferSize()`：获取服务器套接字的接收缓冲区大小，如果要设置大于 64 KB 的缓冲区, 必须在 ServerSocket 绑定到特定端口之前进行设置才有效

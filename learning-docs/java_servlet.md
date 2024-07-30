@@ -50,6 +50,13 @@ HTTP 请求消息分为请求行、请求消息头和请求消息体三部分，
     | getParameterNames() | 以枚举集合的形式返回请求中所有参数名。 |
     | getParameterMap() | 用于将请求中的所有参数名和参数值装入一个 Map 对象中返回。 |
 
+    > 注意：在获取请求消息体时，需要注意请求消息体的编码问题。如果请求消息体是以 application/x-www-form-urlencoded 类型提交的，则可以通过 getParameter() 方法获取请求参数；如果请求消息体是以 multipart/form-data 类型提交的，则需要通过 getInputStream() 或 getReader() 方法获取请求消息体的数据。
+
+4. 获取请求的其他信息
+    - `Cookie[] getCookies()`：获取请求中的所有 Cookie 对象
+    - `HttpSession getSession()`：获取请求对应的 Session 对象，如果没有则创建一个
+    - `HttpSession getSession(boolean create)`：获取请求对应的 Session 对象，如果没有则根据 create 参数决定是否创建一个
+
 ## HttpServletResponse
 
 HttpServletResponse对象代表服务器的响应。继承了ServletResponse的接口。这个对象可以设置响应数据、设置响应头、设置响应状态码。
@@ -81,3 +88,24 @@ HttpServletResponse对象代表服务器的响应。继承了ServletResponse的�
     | --- | --- |
     | setStatus(int sc) | 设置响应状态码 |
     | sendRedirect(String location) | 重定向到指定的 URL 地址 |
+
+## Cookie
+
+Cookie是客户端保存的数据，存在安全问题，并且个数和大小都有限制，一般大小限制在4KB左右。一般会保存服务端提供的SessionID，以便下次请求时，服务器可以根据SessionID找到对应的Session。
+
+常用方法：
+    1. `Cookie(String name, String value)`：创建一个Cookie对象，设定特定的名字和值。
+    2. `setMaxAge(int expiry)`：设置Cookie的有效期，单位为秒。
+    3. `setDomain(String pattern)`：设置Cookie的生效域名。
+    4. `setPath(String uri)`：设置Cookie的生效路径。
+    5. `setSecure(boolean flag)`：设置Cookie是否只能通过HTTPS或SSL等安全传输协议传输。
+    6. `getName()`：获取Cookie的名字。
+    7. `getValue()`：获取Cookie的值。
+    8. `getMaxAge()`：获取Cookie的有效期。
+    9. `getDomain()`：获取Cookie的生效域名。
+    10. `getPath()`：获取Cookie的生效路径。
+    11. `getSecure()`：获取Cookie是否只能通过HTTPS或SSL等安全传输协议传输。
+
+## Session
+
+Session是服务器端保存的数据，可以保存任意大小的数据。Session是基于Cookie实现的，Cookie中保存了Session的ID，服务器根据Session的ID找到对应的Session。

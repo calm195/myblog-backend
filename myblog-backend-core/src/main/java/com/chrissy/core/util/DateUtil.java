@@ -68,7 +68,7 @@ public class DateUtil {
      * @param timestamp 时间戳
      * @return LocalDateTime实例
      */
-    private static LocalDateTime timestampToLocalDateTime(long timestamp){
+    public static LocalDateTime timestampToLocalDateTime(long timestamp){
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
     }
 

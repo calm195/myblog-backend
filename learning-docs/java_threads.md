@@ -7,6 +7,20 @@
 3. 任务接口（Task）：每个任务必须实现的接口，以供工作线程调度任务的执行，它主要规定了任务的入口，任务执行完后的收尾工作，任务的执行状态等；
 4. 任务队列（taskQueue）：用于存放没有处理的任务。提供一种缓冲机制。
 
+## ReentrantLock
+
+ReentrantLock是一个可重入的互斥锁，它是Java提供的一种线程同步的工具。它可以保证多个线程互斥的访问共享资源，是一种比synchronized更加灵活的锁机制。
+他有公平锁和非公平锁两种实现方式。默认实现为非公平锁。
+
+1. 构造方法
+    1. ReentrantLock()：创建一个ReentrantLock实例。
+    2. ReentrantLock(boolean fair)：创建一个ReentrantLock实例，并指定是否为公平锁。
+2. 常用方法
+    1. lock()：获取锁。
+    2. unlock()：释放锁。
+    3. trylock()：尝试获取锁。
+    4. lockInterruptibly()：获取锁，但允许被中断。
+
 ## 原子类
 
 原子类是一种提供了原子操作的类，它可以保证线程安全。原子类位于java.util.concurrent.atomic包下，是Java提供的一种线程安全的工具。
