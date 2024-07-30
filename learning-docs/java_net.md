@@ -104,3 +104,9 @@
        > serverSocket.setReuseAddress(true) 方法必须在 ServerSocket 还没有绑定到一个本地端口之前调用, 否则执行 serverSocket.setReuseAddress(true) 方法无效. 此外, 两个共用同一个端口的进程必须都调用 serverSocket.setResuseAddress(true) 方法, 才能使得一个进程关闭 ServerSocket 后, 另一个进程的 ServerSocket 还能够立刻重用相同的端口.
     - `void setReceiveBufferSize(int size)`：设置服务器套接字的接收缓冲区大小
     - `int getReceiveBufferSize()`：获取服务器套接字的接收缓冲区大小，如果要设置大于 64 KB 的缓冲区, 必须在 ServerSocket 绑定到特定端口之前进行设置才有效
+
+6. Proxy
+    Proxy类表示代理服务器，包含代理服务器的类型和地址。该类提供了获取代理服务器的方法，如可以获取代理服务器的类型、地址等。
+    - `Proxy(Proxy.Type type, SocketAddress sa)`：创建代理服务器
+    - `Proxy.Type type()`：获取代理服务器的类型
+    - `SocketAddress address()`：获取代理服务器的地址

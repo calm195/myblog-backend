@@ -18,6 +18,19 @@
 
 2. `@Aspect`：将当前类标识为一个切面，供容器使用
 3. `@Component`：将当前POJO实例化到Spring容器中
+4. `@ConfigurationProperties`：将配置文件中的属性注入到当前类中
+   常见用法：
+   - `@ConfigurationProperties(prefix = "xxx")`：将配置文件中以`xxx`开头的属性注入到当前类中
+   - `@Value("${xxx}")`：将配置文件中的`xxx`属性注入到当前类中
+5. `@Controller`：将当前类标识为一个控制器
+6. `@Data`：Lombok注解，自动生成`toString()`, `equals()`, `hashCode()`, `getter`, `setter`等方法
+7. `@Accessors`：Lombok注解
+   - `chain`：是否启用链式调用，默认为false，启用后setter方法返回当前对象
+   - `fluent`：是否启用fluent风格，默认为false，即getter, setter方法名前不加`get`, `set`，会生成get, set方法
+   - `prefix`：该属性是一个字符串数组，当该数组有值时，表示忽略字段中对应的前缀，生成对应的 getter 和 setter 方法。
+8. `@Entity`：JPA注解，将当前类标识为一个实体类。并且会映射到数据库表中，默认情况下，表名和类名一致，字段名和属性名一致。
+9. `@Resource`：J2EE注解，用于注入其他组件。默认使用名称注入，如果找不到对应的名称，则使用类型注入。
+10. `@Autowired`：Spring注解，用于注入其他组件。默认使用类型注入。
 
 ## 元注解
 
