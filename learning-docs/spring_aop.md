@@ -56,3 +56,21 @@ Signature是Spring框架中的一个接口，表示方法或构造函数的签�
     - `Class<?> getReturnType()`：获取返回值类型
     - `Class<?>[] getParameterTypes()`：获取参数类型
 2. ConstructorSignature
+
+## ParameterNameDiscoverer
+
+ParameterNameDiscoverer是Spring框架中的一个接口，用于获取方法参数名。
+
+常用方法：
+
+1. `String[] getParameterNames(Method method)`：获取方法参数名
+2. `String[] getParameterNames(Constructor<?> ctor)`：获取构造函数参数名
+
+默认实现：
+
+1. PrioriParameterNameDiscoverer：管理Spring中注册的所有ParameterNameDiscoverer实现类，内部维护一个List，按照注册顺序依次调用
+    - `void addDiscoverer(ParameterNameDiscoverer pnd)`：添加ParameterNameDiscoverer实现类
+2. DefaultParameterNameDiscoverer：PriorityParameterNameDiscoverer的子类，默认注册了三个解析器
+   1. StandardReflectionParameterNameDiscoverer：使用JDK的反射API获取参数名
+   2. LocalVariableTableParameterNameDiscoverer：使用ASM库获取参数名
+   3. KotlinReflectionParameterNameDiscoverer：使用Kotlin反射API获取参数名

@@ -267,3 +267,95 @@ Java内存模型规定了所有的变量都存储在主内存中，每个线程�
     - `Expression parseExpression(String expressionString, ParserContext context)`：解析表达式，可以指定解析上下文
     - `Expression parseExpression(String expressionString, ExpressionParserContext context)`：解析表达式，可以指定解析上下文
     - `Expression parseExpression(String expressionString, TemplateParserContext context)`：解析表达式，可以指定解析上下文
+
+3. Expression 接口
+    - `Object getValue()`：获取解析结果
+    - `Object getValue(Class<?> desiredResultType)`：获取解析结果，并指定结果类型
+    - `Object getValue(EvaluationContext context)`：获取解析结果，并指定上下文
+    - `Object getValue(EvaluationContext context, Class<?> desiredResultType)`：获取解析结果，并指定上下文和结果类型
+    - `T getValue(EvaluationContext context, Class<T> desiredResultType)`：获取解析结果，并指定上下文和结果类型
+    - `T getValue(EvaluationContext context, Object rootObject, Class<T> desiredResultType)`：获取解析结果，并指定上下文、根对象和结果类型
+    - `T getValue(EvaluationContext context, Object rootObject, Class<T> desiredResultType, TypeDescriptor targetType)`：获取解析结果，并指定上下文、根对象、结果类型和目标类型
+    - `T getValue(EvaluationContext context, Object rootObject, TypeDescriptor targetType)`：获取解析结果，并指定上下文、根对象和目标类型
+    - `void setValue(EvaluationContext context, Object rootObject, Object value)`：设置解析结果
+    - `void setValue(EvaluationContext context, Object value)`：设置解析结果
+    - `void setValue(Object value)`：设置解析结果
+    - `TypeDescriptor getValueTypeDescriptor()`：获取解析结果的类型描述
+    - `String getExpressionString()`：获取表达式字符串
+    - `boolean isWritable(EvaluationContext context)`：判断是否可写
+    - `boolean isWritable(EvaluationContext context, Object rootObject)`：判断是否可写
+    - `boolean isWritable(EvaluationContext context, Object rootObject, Object value)`：判断是否可写
+    - `boolean isWritable(EvaluationContext context, Object rootObject, Object value, TypeDescriptor targetType)`：判断是否可写
+    - `boolean isWritable(EvaluationContext context, Object rootObject, TypeDescriptor targetType)`：判断是否可写
+    - `boolean isWritable(Object rootObject)`：判断是否可写
+    - `boolean isWritable(Object rootObject, Object value)`：判断是否可写
+    - `boolean isWritable(Object rootObject, Object value, TypeDescriptor targetType)`：判断是否可写
+4. EvaluationContext类
+    表达式上下文，用于存储或设置表达式的变量。parseExpression()方法可以传入EvaluationContext对象，用于获取某个上下文中的变量。
+    - StandardEvaluationContext：标准表达式上下文
+        相对于EvaluationContext接口，StandardEvaluationContext类提供了更多的功能，如设置根变量、函数、类型转换器等。
+5. BeanResolver接口
+    - `Object resolve(EvaluationContext context, String beanName)`：从给定的上下文中，根据name解析bean，返回bean实例
+    - BeanFactoryResolver：Bean工厂解析器，用于解析BeanFactory中的bean
+
+## 流处理
+
+1. Stream 流
+    Stream 流是 Java 8 中引入的一种新的抽象，用于处理集合数据。Stream 流可以对集合数据进行过滤、映射、排序、聚合等操作。Stream 流的操作分为两类：中间操作和终结操作。
+    中间操作：对数据进行处理，返回一个新的 Stream 流。中间操作又可以分为无状态操作和有状态操作。无状态操作：元素的处理不依赖于上下文，如 map()、filter() 等。有状态操作：元素的处理依赖于上下文，如 distinct()、sorted() 等。
+    终结操作：对数据进行聚合，返回一个结果。终结操作又可以分为短路操作和非短路操作。短路操作：只要满足条件就可以结束操作，如 findFirst()、findAny() 等。非短路操作：需要处理所有元素才能结束操作，如 count()、forEach() 等。
+
+    实例化方法：
+    - `Stream.of(T... values)`：创建一个包含指定元素的 Stream 流
+    - `Collection.stream()`：创建一个包含集合元素的 Stream 流
+    - `Arrays.stream(T[] array)`：创建一个包含数组元素的 Stream 流
+    - `Stream.generate(Supplier<T> s)`：创建一个无限长度的 Stream 流，通过提供的 Supplier 来生成元素
+
+    常见API表：
+
+    | 操作类型 | 具体类型 | 方法声明 | 说明 |
+    | :--- | :--- | :--- | :--- |
+    | 中间操作 | 无状态操作 | `<R> Stream<R> map(Function<? super T,? extends R> mapper)` | 对元素进行映射 |
+    | 中间操作 | 无状态操作 | `Stream<T> filter(Predicate<? super T> predicate)` | 过滤元素 |
+    | 中间操作 | 无状态操作 | `Stream<T> peek(Consumer<? super T> action)` | 对元素进行操作 |
+    | 中间操作 | 无状态操作 | `S unordered()` | 无序操作 |
+    | 中间操作 | 有状态操作 | `Stream<T> distinct()` | 去重 |
+    | 中间操作 | 有状态操作 | `Stream<T> sorted()` | 排序 |
+    | 中间操作 | 有状态操作 | `Stream<T> limit(long maxSize)` | 截取 |
+    | 中间操作 | 有状态操作 | `Stream<T> skip(long n)` | 跳过 |
+    | 终结操作 | 短路操作 | `Optional<T> findFirst()` | 返回第一个元素 |
+    | 终结操作 | 短路操作 | `Optional<T> findAny()` | 返回任意元素 |
+    | 终结操作 | 短路操作 | `boolean anyMatch(Predicate<? super T> predicate)` | 是否有匹配元素 |
+    | 终结操作 | 短路操作 | `boolean allMatch(Predicate<? super T> predicate)` | 是否所有元素都匹配 |
+    | 终结操作 | 短路操作 | `boolean noneMatch(Predicate<? super T> predicate)` | 是否没有匹配元素 |
+    | 终结操作 | 非短路操作 | `long count()` | 元素个数 |
+    | 终结操作 | 非短路操作 | `void forEach(Consumer<? super T> action)` | 遍历元素 |
+    | 终结操作 | 非短路操作 | `Object[] toArray()` | 转换为数组 |
+    | 终结操作 | 非短路操作 | `<R,A> R collect(Collector<? super T,A,R> collector)` | 转换为集合 |
+    | 终结操作 | 非短路操作 | `Optional<T> min(Comparator<? super T> comparator)` | 最小值 |
+    | 终结操作 | 非短路操作 | `Optional<T> max(Comparator<? super T> comparator)` | 最大值 |
+    | 终结操作 | 非短路操作 | `Optional<T> reduce(BinaryOperator<T> accumulator)` | 规约操作 |
+    | 终结操作 | 非短路操作 | `void forEachOrdered(Consumer<? super T> action)` | 有序遍历元素 |
+
+2. Collector 收集器
+    Collector 是 Stream 流的终结操作，用于将 Stream 流的元素收集到一个结果容器中。Collector 是一个接口，定义了收集元素的方法。Collector 接口的方法有四个：supplier()、accumulator()、combiner() 和 finisher()。
+
+    常见API表：
+
+    | 方法 | 说明 |
+    | :--- | :--- |
+    | `static <T> Collector<T,?,List<T>> toList()` | 将元素收集到一个 List 集合中 |
+    | `static <T> Collector<T,?,Set<T>> toSet()` | 将元素收集到一个 Set 集合中 |
+    | `static <T> Collector<T,?,Map<K,U>> toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper)` | 将元素收集到一个 Map 集合中 |
+    | `static <T> Collector<T,?,Map<K,List<T>>> groupingBy(Function<? super T,? extends K> classifier)` | 根据分类器对元素进行分组 |
+    | `static <T> Collector<T,?,Map<Boolean,List<T>>> partitioningBy(Predicate<? super T> predicate)` | 根据条件对元素进行分区 |
+    | `static Collector<CharSequence,?,String> joining()` | 将元素连接成一个字符串 |
+    | `static <T,A,R,RR> Collector<T,A,RR> collectingAndThen(Collector<T,A,R> downstream, Function<R,RR> finisher)` | 对收集结果进行转换 |
+
+3. ParallelStream 并行流
+    ParallelStream 是 Stream 流的一种，用于并行处理集合数据。ParallelStream 流可以对集合数据进行并行处理，提高处理效率。ParallelStream 流的操作和 Stream 流的操作类似，只是在创建 ParallelStream 流时，需要调用 parallel() 方法。
+
+    实例化方法：
+    - `Collection.parallelStream()`：创建一个包含集合元素的 ParallelStream 流
+    - `Arrays.parallelStream(T[] array)`：创建一个包含数组元素的 ParallelStream 流
+    - `Stream.parallel()`：创建一个并行流

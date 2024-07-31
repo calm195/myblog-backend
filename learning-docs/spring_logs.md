@@ -268,3 +268,16 @@ logback-classic模块只会处理实现了`ch.qos.logback.classic.spi.ILoggingEv
             }
         }
         ```
+
+## Log4j2
+
+## MDC
+
+MDC（Mapped Diagnostic Context）是Log4j和Logback提供的一种方便在多线程环境中记录日志的功能。MDC是一个Map结构，可以看作是一个与当前线程绑定的哈希表。它可以存储一些上下文信息，如用户ID、请求ID等，这些信息会被自动添加到日志中。MDC的信息是线程私有的，不会被其他线程访问。
+
+常用方法：
+
+- `put(String key, String value)`：向MDC中添加键值对。
+- `get(String key)`：获取MDC中指定键的值。
+- `remove(String key)`：从MDC中移除指定键。
+- `clear()`：清空MDC。
