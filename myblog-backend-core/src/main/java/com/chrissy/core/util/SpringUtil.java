@@ -17,10 +17,11 @@ import org.springframework.stereotype.Component;
  * @date 2024/7/25 10:09
  */
 @Component
-@Getter
 public class SpringUtil implements ApplicationContextAware, EnvironmentAware {
+    @Getter
     private volatile static ApplicationContext context;
     private volatile static Environment environment;
+    @Getter
     private static Binder binder;
 
     /**

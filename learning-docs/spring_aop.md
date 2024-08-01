@@ -74,3 +74,18 @@ ParameterNameDiscoverer是Spring框架中的一个接口，用于获取方法参
    1. StandardReflectionParameterNameDiscoverer：使用JDK的反射API获取参数名
    2. LocalVariableTableParameterNameDiscoverer：使用ASM库获取参数名
    3. KotlinReflectionParameterNameDiscoverer：使用Kotlin反射API获取参数名
+
+## ReflectionUtils
+
+ReflectionUtils是Spring框架中的一个工具类，用于反射操作。
+
+1. 成员变量
+    - `static final Field[] NO_FIELDS`：空Field数组
+    - `static final Method[] NO_METHODS`：空Method数组
+    - `Map<Class<?>, Field[]> declaredFieldsCache`：缓存类的所有Field
+    - `Map<Class<?>, Method[]> declaredMethodsCache`：缓存类的所有Method
+    - `CGLIB_RENAMED_METHOD_PREFIX = "CGLIB$"`：CGLIB重命名方法前缀
+2. 方法
+    1. Filed
+        - `static Field findField(Class<?> clazz, String name)`：查找Field
+        - `static void doWithFields(Class<?> clazz, FieldCallback fc)`：遍历类的所有Field

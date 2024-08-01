@@ -19,6 +19,8 @@
 2. `@Aspect`：将当前类标识为一个切面，供容器使用
 3. `@Component`：将当前POJO实例化到Spring容器中
 4. `@ConfigurationProperties`：将配置文件中的属性注入到当前类中
+   > 要使用本注解，需要在配置类上加上`@EnableConfigurationProperties`注解，并且指明当前配置类；或者在当前配置类上加上`@Configuration`注解
+
    常见用法：
    - `@ConfigurationProperties(prefix = "xxx")`：将配置文件中以`xxx`开头的属性注入到当前类中
    - `@Value("${xxx}")`：将配置文件中的`xxx`属性注入到当前类中
@@ -31,6 +33,16 @@
 8. `@Entity`：JPA注解，将当前类标识为一个实体类。并且会映射到数据库表中，默认情况下，表名和类名一致，字段名和属性名一致。
 9. `@Resource`：J2EE注解，用于注入其他组件。默认使用名称注入，如果找不到对应的名称，则使用类型注入。
 10. `@Autowired`：Spring注解，用于注入其他组件。默认使用类型注入。
+
+## 条件注解
+
+根据注解条件决定是否加载某个Bean等动作。
+
+1. `@ConditionalOnProperty`：根据配置文件中的属性值决定是否加载Bean
+   - `String prefix`：配置文件中的属性前缀
+   - `String[] name`：配置文件中的属性名
+   - `String havingValue`：期待属性值
+   - `boolean matchIfMissing`：如果配置文件中没有该属性，是否加载Bean，默认为false
 
 ## 元注解
 

@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>myblog-backend-core</module>
+        <module>myblog-backend-model</module>
     </modules>
 
     <parent>

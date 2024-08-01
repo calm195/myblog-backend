@@ -157,7 +157,7 @@ public class RedisClient {
      * @return 是否删除成功
      */
     public static Boolean hDel(String key, String field){
-        return redisTemplate.execute((RedisCallback<Boolean>) con -> Objects.requireNonNull(con.hDel(makeKeyBytesBy(key), getBytesOf(field))) > 0);
+        return redisTemplate.execute((RedisCallback<Boolean>) con -> con.hDel(makeKeyBytesBy(key), getBytesOf(field)) > 0);
     }
 
     /**
@@ -429,7 +429,7 @@ public class RedisClient {
      * @return 排名
      */
     private static Integer zRank(String key, String value) {
-        return redisTemplate.execute((RedisCallback<Integer>) connection -> Objects.requireNonNull(connection.zRank(makeKeyBytesBy(key), getBytesOf(value))).intValue());
+        return redisTemplate.execute((RedisCallback<Integer>) connection -> connection.zRank(makeKeyBytesBy(key), getBytesOf(value)).intValue());
     }
 
     /**

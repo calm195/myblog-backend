@@ -133,7 +133,7 @@ public class IpUtil {
             synchronized (IpUtil.class) {
                 if (vIndex == null) {
                     try {
-                        String file = Objects.requireNonNull(IpUtil.class.getClassLoader().getResource(IP_DB_PATH)).getFile();
+                        String file = IpUtil.class.getClassLoader().getResource(IP_DB_PATH).getFile();
                         if (file.contains(".jar!")) {
                             // RandomAccessFile 无法加载jar包内的文件，因此我们将资源拷贝到临时目录下
                             FileWriteUtil.FileInfo tmpFile = new FileWriteUtil.FileInfo("/tmp/data", "ip2region", "xdb");
