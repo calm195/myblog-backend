@@ -222,6 +222,11 @@
     - 声明：`public interface RandomAccess`
     - 无任何定义方法以及属性，用于标记实现了该接口的类支持随机访问，即可以通过索引访问元素，比如`ArrayList`支持随机访问，`LinkedList`不支持随机访问
 
+21. JSSE（Java Secure Socket Extension）：Java安全套接字扩展
+    - 用于实现安全的网络通信
+    - 提供了SSL（Secure Sockets Layer）和TLS（Transport Layer Security）协议的实现
+    - 用于实现HTTPS（HTTP over SSL/TLS）协议
+
 ## 内存模型
 
 Java内存模型规定了所有的变量都存储在主内存中，每个线程都有自己的工作内存，线程的工作内存中保存了该线程使用到的变量的副本。  

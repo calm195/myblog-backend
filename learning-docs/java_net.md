@@ -1,6 +1,73 @@
 # Java Net
 
-包名：`java.net`
+包名：`java.net` / `javax.net`
+
+## URL
+
+    [URL](https://docs.oracle.com/javase/8/docs/api/java/net/URL.html)类表示统一资源定位符，包含协议、主机、端口、路径等信息。该类提供了获取URL的方法，如可以获取协议、主机、端口、路径等。
+
+1. 构造方法
+    - `URL(String spec)`：根据指定的URL字符串创建URL对象
+    - `URL(String protocol, String host, int port, String file)`：根据指定的协议、主机、端口和路径创建URL对象
+    - `URL(String protocol, String host, int port, String file, URLStreamHandler handler)`：根据指定的协议、主机、端口、路径和处理程序创建URL对象
+2. 方法
+    - `String getProtocol()`：获取URL的协议
+    - `String getHost()`：获取URL的主机
+    - `int getPort()`：获取URL的端口
+    - `String getPath()`：获取URL的路径
+
+## URI
+
+    [URI](https://docs.oracle.com/javase/8/docs/api/java/net/URI.html)类表示统一资源标识符，采用特定的语法格式，用于标识资源。语法构成：scheme:scheme-specific-part。
+    常用模式有：
+    - data：链接中直接包含经过base64编码的数据
+    - file：文件系统路径文件
+    - ftp：FTP服务器
+    - http：超文本传输协议
+    - mailto：电子邮件地址
+    - magnet：磁力链接，可以通过P2P下载的资源
+    - telnet：基于Telnet协议的远程终端连接
+    - urn：统一资源名称
+
+## HostnameVerifier
+
+[HostnameVerifier](https://docs.oracle.com/javase/8/docs/api/javax/net/ssl/HostnameVerifier.html)接口表示主机名验证器，用于验证主机名。
+
+- `boolean verify(String hostname, SSLSession session)`：验证主机名
+
+## ssl/tls
+
+1. SSLContext
+    SSLContext保存了基于该上下文创建的全部对象的状态信息。
+    - `static SSLContext getInstance(String protocol)`：获取指定协议的 SSLContext 对象
+    - `static SSLContext getInstance(String protocol, String provider)`：获取指定协议的 SSLContext 对象
+    - `static SSLContext getInstance(String protocol, Provider provider)`：获取指定协议的 SSLContext 对象
+        > 协议有：SSL、SSLv2、SSLv3、TLS、TLSv1、TLSv1.1、TLSv1.2
+        > 如果仅指定协议名称，那么在可能多个结果的情况下，将选择默认提供程序的最高优先级提供程序。
+    - `void init(KeyManager[] km, TrustManager[] tm, SecureRandom random)`：初始化 SSLContext 对象
+        > KeyManager：密钥管理器，用于管理密钥。若为null，则为当前上下文定义
+        > TrustManager：信任管理器，用于验证服务器端的证书。若为null，则搜索已安装的信任管理器
+        > SecureRandom：随机数生成器，用于创建 SSLSession 对象。若为null，则使用默认的随机数生成器
+    - `SSLSocketFactory getSocketFactory()`：获取 SSL 套接字工厂
+2. TrustManager
+    TrustManager是一个接口，用于实现自定义的信任管理器。
+    java1.8仅提供了一个默认的实现：`X509TrustManager`，用于验证X.509证书。
+
+## HttpsURLConnection
+
+HttpsURLConnection是URLConnection的子类，用于支持HTTPS协议的连接。
+
+1. 构造方法
+    - `HttpsURLConnection(URL url)`：创建一个HttpsURLConnection对象
+2. 方法
+    - `static void setDefaultHostnameVerifier(HostnameVerifier v)`：设置默认的主机名验证器
+    - `static HostnameVerifier getDefaultHostnameVerifier()`：获取默认的主机名验证器
+    - `static void setDefaultSSLSocketFactory(SSLSocketFactory sf)`：设置默认的SSL套接字工厂
+    - `static SSLSocketFactory getDefaultSSLSocketFactory()`：获取默认的SSL套接字工厂
+3. HostnameVerifier
+    - `boolean verify(String hostname, SSLSession session)`：解析session里的证书验证主机名，返回true表示验证通过
+
+## network
 
 1. NetworkInterface
    NetworkInterface类包含网络接口名称与IP地址列表。该类提供访问网卡设备的相关信息，如可以获取网卡名称、IP地址和子网掩码等。
