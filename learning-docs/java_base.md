@@ -184,6 +184,7 @@
             - `int start()`：返回当前匹配到的字符串在原目标字符串中的起始索引位置
             - `int end()`：返回当前匹配到的字符串在原目标字符串中的末尾索引位置
             - `Pattern pattern()`：也可以返回创建本实例的`Pattern`
+            - `String quoteReplacement(String s)`：返回指定字符串的字面替换字符串
 16. `Enumeration`接口：枚举接口
       - 声明：`public interface Enumeration<E>`
       - 方法
@@ -226,6 +227,8 @@
     - 用于实现安全的网络通信
     - 提供了SSL（Secure Sockets Layer）和TLS（Transport Layer Security）协议的实现
     - 用于实现HTTPS（HTTP over SSL/TLS）协议
+
+22. `@Primary`注解：优先注入；当有多个实现类时，优先注入带有`@Primary`注解的实现类
 
 ## 内存模型
 

@@ -78,7 +78,7 @@ public class DateUtil {
      * @param timestamp 时间戳
      * @return 符合格式的时间字符串
      */
-    private static String format(DateTimeFormatter formatter, long timestamp){
+    public static String format(DateTimeFormatter formatter, long timestamp){
         LocalDateTime localDateTime = timestampToLocalDateTime(timestamp);
         return formatter.format(localDateTime);
     }

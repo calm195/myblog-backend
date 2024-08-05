@@ -14,7 +14,7 @@ RabbitMQ是实现AMQP消息队列和路由功能的进程，内部结构为多�
 
 ## RabbitMQ工作流程
 
-![RabbitMQ工作流程](https://raw.githubusercontent.com/learning-docs/rabbitmq_kit/master/images/rabbitmq_workflow.png)
+![RabbitMQ工作流程](./image/rabbitmq_workflow.png)
 
 1. Producer：消息生产者
 2. Connection：连接，TCP连接
