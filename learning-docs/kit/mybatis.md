@@ -1,12 +1,12 @@
 # MyBatis
 
 架构图：
-![MyBatis-arch](./image/mybatis-arch.png)
+![MyBatis-arch](../image/mybatis-arch.png)
 
 1. 接口层与数据库交互的方式
     - 使用传统的MyBatis提供的API：即传入`Statement Id` 和 查询参数 给SqlSession对象；由SqlSession对象与数据库交互；简单实用，但不符合面向对象的编程习惯。
     - 使用MyBatis支持接口调用方式：MyBatis把配置文件中的每一个`<mapper>`节点抽象为一个`Mapper`接口，接口中的方法，参数等也对应于各个子节点。通过`SqlSession.getMapper(xxxMapper.class)`方法就可以得到Mapper实例，从而实现交互。另外除了配置文件，还可以通过注解的方式实现调用。
-![MyBatis-interface](./image/mybatis-interface.png)
+![MyBatis-interface](../image/mybatis-interface.png)
 2. 数据处理层
     - 参数映射和动态sql语句生成：jdbc与java对象之间的相互转化
     - 执行sql语句，并将封装查询结果继承List
@@ -26,7 +26,7 @@
 - `Configuration`：MyBatis所有的配置信息
 - `SqlSource`：根据用户传递的`parameterObject`动态生成sql语句，封装到`BoundSql`对象中，并返回
 
-![MyBatis-arch-relation](./image/mybatis-arch-relation.png)
+![MyBatis-arch-relation](../image/mybatis-arch-relation.png)
 
 ## 常用实践
 
