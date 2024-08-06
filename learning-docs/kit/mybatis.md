@@ -38,23 +38,50 @@
     - `Object getAdditionalParameter(String name)`：获取额外的参数
 2. `MetaObject`类：用于获取对象的元数据信息
     - `Object getValue(String name)`：获取对象的属性值
-3. `Configuration`类：获取配置信息
+3. `SystemMetaObject`类：系统元数据对象
+    - `MetaObject forObject(Object object)`：获取对象的元数据信息
+4. `Configuration`类：获取配置信息
     - `MetaObject newMetaObject(Object object)`：获取对象的元数据信息
     - `TypeHandlerRegistry getTypeHandlerRegistry()`：获取类型处理器注册器
-4. `TypeHandlerRegistry`类：类型处理器注册器
+5. `TypeHandlerRegistry`类：类型处理器注册器
     - `boolean hasTypeHandler(Class<?> javaType)`：判断是否有对应的类型处理器
-5. `ParameterMapping`类：参数映射
+6. `ParameterMapping`类：参数映射
     - `String getProperty()`：获取参数名
     - `ParameterMode getMode()`：获取参数模式
-6. `ParameterMode`类：参数模式
+7. `ParameterMode`类：参数模式
     - `IN`：输入参数
     - `OUT`：输出参数
     - `INOUT`：输入输出参数
-7. `StatementHandler`接口：处理SQL语句的接口
+8. `StatementHandler`接口：处理SQL语句的接口
     - `BoundSql getBoundSql()`：获取`BoundSql`对象
     - `ParameterHandler getParameterHandler()`：获取`ParameterHandler`对象
     1. `DefaultParameterHandler`类：参数处理器
     2. `MyBatisParameterHandler`类：MyBatis参数处理器
-8. `Invocation`类：调用处理器
+9. `Invocation`类：调用处理器
     - `Object getTarget()`：获取目标对象
     - `Object[] getArgs()`：获取参数列表
+    - `Method getMethod()`：获取方法
+10. `ResultSetHandler`接口：结果处理器
+    - `List<E> handleResultSets(Statement stmt)`：处理结果集
+    - `void handleOutputParameters(CallableStatement cs)`：处理输出参数
+    - `Cursor<E> handleCursorResultSets(Statement stmt)`：处理游标结果集
+
+## ResultSetHandler
+
+将`StatementHandler`做的数据库连接、生成`Statement`、解析SQL参数，以及`ParameterHandler`做的参数映射处理，这些步骤生成的结果集进行处理，形成一个完整的SQL请求。
+只有一个默认实现类`DefaultResultSetHandler`。
+一般情况下，`ResultSetHandler`是在处理查询请求时由`Configuration`对象创建。
+
+| 方法 | 说明 |
+| --- | --- |
+| `List<E> handleResultSets(Statement stmt)` | 处理结果集 |
+| `void handleOutputParameters(CallableStatement cs)` | 处理存储过程中的输出参数 |
+| `Cursor<E> handleCursorResultSets(Statement stmt)` | 批量处理结果集 |
+
+## 注解
+
+1. `@Intercepts`：拦截器注解。可以拦截：sql的构建`StatementHandler`、参数的处理`ParameterHandler`、结果的处理`ResultSetHandler`、sql内部执行器`Executor`。
+    - `@Signature`：拦截器签名
+        - `type`：拦截的对象，即以上类型
+        - `method`：拦截的方法，拦截的对象的方法
+        - `args`：拦截的参数，拦截的对象的方法的参数

@@ -13,3 +13,6 @@
         > - 41位时间戳，毫秒级
         > - 10位机器ID
         > - 12位序列号，同一毫秒内的产生的ID序号
+3. CAS：Compare And Swap，即比较并交换。是一种乐观锁技术，通过比较内存中的值和期望值，如果相等则更新，否则不断重试。CAS是一种无锁算法，适用于多线程环墿。Java中的AtomicInteger、AtomicLong、AtomicReference等类都是基于CAS实现的。
+    - CAS的ABA问题：线程1读取A，线程2读取A，线程2修改A为B，线程2再修改A为A，线程1修改A为C，这样线程1认为A没有被修改过，但实际上已经被修改过了。解决方法是使用版本号，每次修改都会增加版本号。
+4. CRUD操作：数据库操作的四种基本操作，即Create、Read、Update、Delete。

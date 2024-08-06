@@ -230,6 +230,21 @@
 
 22. `@Primary`注解：优先注入；当有多个实现类时，优先注入带有`@Primary`注解的实现类
 
+23. `java.util.Objects`
+    - `public static boolean isNull(Object obj)`：判断对象是否为null
+    - `public static boolean nonNull(Object obj)`：判断对象是否不为null
+
+24. `@SuppressWarnings`：抑制警告。如果在类上使用，那么该类中的所有方法都会抑制相应的警告。即作用域会全覆盖。
+    - `@SuppressWarnings("unchecked")`：抑制未检查的警告
+    - `@SuppressWarnings("rawtypes")`：抑制原始类型的警告
+    - `@SuppressWarnings("serial")`：抑制缺少序列化ID的警告
+    - `@SuppressWarnings("deprecation")`：抑制使用过时方法的警告
+    - `@SuppressWarnings("unchecked", "rawtypes")`：抑制多个警告
+
+25. `ClassUtils`：`org.apache.common.lang3`包
+     - `String getShortClassName(Class<?> cls)`：获取类的简短名称
+     - `boolean isPrimitiveOrWrapper(Class<?> type)`：判断是否为基本类型或包装类型
+
 ## 内存模型
 
 Java内存模型规定了所有的变量都存储在主内存中，每个线程都有自己的工作内存，线程的工作内存中保存了该线程使用到的变量的副本。  

@@ -20,6 +20,7 @@ Lombok通过在编译时期，使用注解处理器（Annotation Processor）来
 
 1. @Getter
 2. @Setter
-3. @Slf4j
-4. @ToString
+3. @ToString
+4. @Slf4j
 5. @Data
+    注解在类上，相当于同时加上了@Getter、@Setter、@ToString、@EqualsAndHashCode、@RequiredArgsConstructor这几个注解。

@@ -122,3 +122,10 @@ Java 集合，也叫作容器，主要是由两大接口派生而来：一个是
 3. Hashtable
 4. TreeMap
 5. ConcurrentHashMap **（线程安全）**
+    内部使用Node数组+链表/红黑树实现。当链表长度大于一定长度，链表会转换为红黑树。初始化通过自旋+CAS实现。
+    - `void put(K key, V value)`：添加元素
+    - `V putIfAbsent(K key, V value)`：如果不存在则添加，返回null；如果存在则返回原值
+    - `V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction)`：根据键值计算新值。执行函数可能会阻塞线程，因此需要尽可能简单快捷。
+    - `V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction)`：根据键值计算新值，如果不存在则添加。执行函数可能会阻塞线程，因此需要尽可能简单快捷。
+    - `void remove(Object key)`：移除元素
+    - `boolean containsKey(Object key)`：判断是否包含键
