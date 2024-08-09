@@ -245,6 +245,10 @@
      - `String getShortClassName(Class<?> cls)`：获取类的简短名称
      - `boolean isPrimitiveOrWrapper(Class<?> type)`：判断是否为基本类型或包装类型
 
+26. `BooleanUtils`：`org.apache.common.lang3`包
+     - `boolean isTrue(Boolean bool)`：判断是否为true
+     - `boolean isFalse(Boolean bool)`：判断是否为false
+
 ## 内存模型
 
 Java内存模型规定了所有的变量都存储在主内存中，每个线程都有自己的工作内存，线程的工作内存中保存了该线程使用到的变量的副本。  

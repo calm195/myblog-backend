@@ -11,6 +11,7 @@
     <modules>
         <module>myblog-backend-core</module>
         <module>myblog-backend-model</module>
+        <module>myblog-backend-service</module>
     </modules>
 
     <parent>

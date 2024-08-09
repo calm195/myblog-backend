@@ -13,3 +13,5 @@
 3. Flushable：刷新缓冲区的接口
     > 该接口中只有一个`flush()`方法，用于刷新缓冲区。
     > > `void flush() throws IOException`
+4. Serializable：序列化接口
+    > 该接口没有任何方法，只是一个标记接口，用于标记类可以被序列化。
