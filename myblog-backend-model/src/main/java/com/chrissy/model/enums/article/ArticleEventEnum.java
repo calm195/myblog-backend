@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * @author chrissy
- * @description
+ * @description 文章事件
  * @date 2024/8/9 14:06
  */
 @Getter
