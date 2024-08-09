@@ -11,12 +11,13 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ActivityRankPeriodEnum {
+    EMPTY(0, ""),
     DAY(1, "day"),
     WEEK(2, "week"),
     MONTH(3, "month"),
     ;
 
-    private final int type;
+    private final Integer code;
     private final String desc;
 
     public static ActivityRankPeriodEnum nameOf(String name){
@@ -28,5 +29,14 @@ public enum ActivityRankPeriodEnum {
             return MONTH;
         }
         return null;
+    }
+
+    public static ActivityRankPeriodEnum formCode(Integer code) {
+        for (ActivityRankPeriodEnum value : ActivityRankPeriodEnum.values()) {
+            if (value.getCode().equals(code)) {
+                return value;
+            }
+        }
+        return ActivityRankPeriodEnum.EMPTY;
     }
 }
