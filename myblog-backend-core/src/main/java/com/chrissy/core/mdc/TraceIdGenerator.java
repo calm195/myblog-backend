@@ -1,7 +1,6 @@
 package com.chrissy.core.mdc;
 
 import com.chrissy.core.util.IpUtil;
-import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.management.ManagementFactory;

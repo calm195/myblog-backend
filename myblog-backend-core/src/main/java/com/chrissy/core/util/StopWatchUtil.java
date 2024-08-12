@@ -3,7 +3,6 @@ package com.chrissy.core.util;
 import org.springframework.util.StopWatch;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author chrissy

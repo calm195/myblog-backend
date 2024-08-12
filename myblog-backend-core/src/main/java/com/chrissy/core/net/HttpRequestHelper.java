@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class HttpRequestHelper {
-    private static final LoadingCache<String, RestTemplate> restTemplateLoadingCache;
+    private static final LoadingCache<String, RestTemplate> REST_TEMPLATE_LOADING_CACHE;
 
     static {
-        restTemplateLoadingCache = Caffeine.newBuilder()
+        REST_TEMPLATE_LOADING_CACHE = Caffeine.newBuilder()
                 .expireAfterAccess(10, TimeUnit.MINUTES)
                 .build(key -> buildRestTemplate());
     }
@@ -41,7 +41,7 @@ public class HttpRequestHelper {
      */
     @Scheduled(cron="0 0 0 * * ?")
     public static void cleanRestTemplate(){
-        restTemplateLoadingCache.cleanUp();
+        REST_TEMPLATE_LOADING_CACHE.cleanUp();
     }
 
 
@@ -72,7 +72,7 @@ public class HttpRequestHelper {
         //用HttpEntity封装整个请求报文
         HttpEntity<MultiValueMap<String, Object>> files = new HttpEntity<>(form, headers);
         String threadName = Thread.currentThread().getName();
-        RestTemplate restTemplate = restTemplateLoadingCache.get(threadName);
+        RestTemplate restTemplate = REST_TEMPLATE_LOADING_CACHE.get(threadName);
         if (restTemplate == null) {
             return null;
         }
@@ -131,7 +131,7 @@ public class HttpRequestHelper {
                                       HttpHeaders headers,
                                       Class<R> responseClass, boolean useProxy) {
         String threadName = Thread.currentThread().getName();
-        RestTemplate restTemplate = restTemplateLoadingCache.get(threadName);
+        RestTemplate restTemplate = REST_TEMPLATE_LOADING_CACHE.get(threadName);
 
         if (restTemplate == null){
             return null;
@@ -224,7 +224,7 @@ public class HttpRequestHelper {
         ResponseEntity<R> responseEntity;
         try {
             String threadName = Thread.currentThread().getName();
-            RestTemplate restTemplate = restTemplateLoadingCache.get(threadName);
+            RestTemplate restTemplate = REST_TEMPLATE_LOADING_CACHE.get(threadName);
             if (restTemplate == null){
                 return null;
             }
