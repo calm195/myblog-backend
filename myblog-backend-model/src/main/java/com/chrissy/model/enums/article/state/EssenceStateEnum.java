@@ -1,4 +1,4 @@
-package com.chrissy.model.enums.article;
+package com.chrissy.model.enums.article.state;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
