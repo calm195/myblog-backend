@@ -32,16 +32,16 @@ public class UserInfoDao extends ServiceImpl<UserInfoMapper, UserInfoPO> {
     }
 
     /**
-     * 根据用户名来查询
+     * 根据用户昵称来模糊查询，like语句
      *
-     * @param username
-     * @return
+     * @param nickName 昵称
+     * @return 相似名称的用户列表
      */
-    public List<UserInfoPO> getByUsernameLike(String username) {
+    public List<UserInfoPO> getByNickNameLike(String nickName) {
         LambdaQueryWrapper<UserInfoPO> query = Wrappers.lambdaQuery();
-        query.select(UserInfoPO::getUserId, UserInfoPO::getUsername, UserInfoPO::getPhoto, UserInfoPO::getProfile)
-                .and(!StringUtils.isEmpty(username),
-                        v -> v.like(UserInfoPO::getUsername, username)
+        query.select(UserInfoPO::getUserId, UserInfoPO::getNickName, UserInfoPO::getPhoto, UserInfoPO::getProfile)
+                .and(!StringUtils.isEmpty(nickName),
+                        v -> v.like(UserInfoPO::getNickName, nickName)
                 )
                 .eq(UserInfoPO::getDeleted, YesOrNoEnum.NO.getCode());
         return userInfoMapper.selectList(query);
@@ -75,8 +75,8 @@ public class UserInfoDao extends ServiceImpl<UserInfoMapper, UserInfoPO> {
         if (StringUtils.isEmpty(user.getPhoto())) {
             user.setPhoto(null);
         }
-        if (StringUtils.isEmpty(user.getUsername())) {
-            user.setUsername(null);
+        if (StringUtils.isEmpty(user.getNickName())) {
+            user.setNickName(null);
         }
         user.setId(record.getId());
         updateById(user);
