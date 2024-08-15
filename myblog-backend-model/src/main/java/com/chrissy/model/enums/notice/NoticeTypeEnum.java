@@ -25,7 +25,6 @@ public enum NoticeTypeEnum {
     CANCEL_COLLECT(4, "取消收藏"),
     CANCEL_FOLLOW(5, "取消关注"),
     REGISTER(6, "用户注册"),
-    BIND(6, "绑定星球"),
     LOGIN(6, "用户登录"),
     ;
 
