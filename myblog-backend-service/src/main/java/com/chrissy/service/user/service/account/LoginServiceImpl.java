@@ -7,8 +7,10 @@ import com.chrissy.service.user.repository.dao.UserAccountDao;
 import com.chrissy.service.user.repository.entity.po.UserAccountPO;
 import com.chrissy.service.user.repository.entity.vo.UserPwdLoginReq;
 import com.chrissy.service.user.service.LoginService;
+import com.chrissy.service.user.service.RegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -29,19 +31,31 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private UserSessionHelper userSessionHelper;
 
+    @Resource
+    private RegisterService registerService;
+
     @Override
-    public Long autoRegisterWxUserInfo(String uuid) {
-        return 0L;
+    @Transactional(rollbackFor = Exception.class)
+    public String loginOrAutoRegisterByWechat(String wechatAccountId) {
+        UserAccountPO userAccount = userAccountDao.getByThirdAccountId(wechatAccountId);
+        Long res;
+        if (userAccount == null){
+            res = registerService.registerByWechatAccount(wechatAccountId);
+        } else {
+            res = userAccount.getId();
+        }
+
+        ReqInfoContext.getReqInfo().setUserId(res);
+        return userSessionHelper.generateSession(res);
     }
 
+    /**
+     * 移除缓存中的session信息
+     * @param session 用户会话
+     */
     @Override
     public void logout(String session) {
-
-    }
-
-    @Override
-    public String loginByWx(Long userId) {
-        return "";
+        userSessionHelper.removeSession(session);
     }
 
     /**
@@ -67,10 +81,5 @@ public class LoginServiceImpl implements LoginService {
 
         ReqInfoContext.getReqInfo().setUserId(userId);
         return userSessionHelper.generateSession(userId);
-    }
-
-    @Override
-    public String registerByUserPwd(UserPwdLoginReq loginReq) {
-        return "";
     }
 }

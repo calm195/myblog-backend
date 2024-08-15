@@ -33,6 +33,8 @@ public class RegisterServiceImpl implements RegisterService {
     @Resource
     private UserInfoDao userInfoDao;
 
+    // todo: 携带用户详细信息的注册逻辑
+
     /**
      * 根据用户名密码方式登录，自动生成昵称和头像，触发事件通知
      * @param username 用户名

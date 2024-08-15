@@ -45,6 +45,11 @@ public class UserSessionHelper {
         jwtVerifier = JWT.require(algorithm).withIssuer(jwtProperties.getIssuer()).build();
     }
 
+    /**
+     * 生成jwt格式的会话，保存用户状态
+     * @param userId 用户id
+     * @return session信息
+     */
     public String generateSession(Long userId) {
         // 1.生成jwt格式的会话，内部持有有效期，用户信息
         String session = JsonUtil.toJsonString(MapUtil.create("s", TraceIdGenerator.generateId(), "u", userId));
@@ -60,6 +65,10 @@ public class UserSessionHelper {
         return token;
     }
 
+    /**
+     * 从缓存中移除session
+     * @param session session会话字段
+     */
     public void removeSession(String session) {
         RedisClient.del(session);
     }
@@ -67,8 +76,8 @@ public class UserSessionHelper {
     /**
      * 根据会话获取用户信息
      *
-     * @param session
-     * @return
+     * @param session session会话字段
+     * @return 用户id
      */
     public Long getUserIdBySession(String session) {
         // jwt的校验方式，如果token非法或者过期，则直接验签失败

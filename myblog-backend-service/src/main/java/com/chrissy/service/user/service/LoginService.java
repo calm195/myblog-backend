@@ -1,7 +1,5 @@
 package com.chrissy.service.user.service;
 
-import com.chrissy.service.user.repository.entity.vo.UserPwdLoginReq;
-
 /**
  * 用户登录服务
  * @author chrissy
@@ -14,10 +12,10 @@ public interface LoginService {
     /**
      * 适用于微信公众号登录场景下，自动注册一个用户
      *
-     * @param uuid 微信唯一标识
-     * @return userId 用户主键
+     * @param wechatAccountId 微信唯一标识
+     * @return 携带用户id的session
      */
-    Long autoRegisterWxUserInfo(String uuid);
+    String loginOrAutoRegisterByWechat(String wechatAccountId);
 
     /**
      * 登出
@@ -27,27 +25,11 @@ public interface LoginService {
     void logout(String session);
 
     /**
-     * 给微信公众号的用户生成一个用于登录的会话
-     *
-     * @param userId 用户主键id
-     * @return
-     */
-    String loginByWx(Long userId);
-
-    /**
      * 用户名密码方式登录
      *
      * @param username 用户名
      * @param password 密码
-     * @return
+     * @return 携带用户id的session
      */
     String loginByUsernameAndPassword(String username, String password);
-
-    /**
-     * 注册登录
-     *
-     * @param loginReq 登录信息
-     * @return
-     */
-    String registerByUserPwd(UserPwdLoginReq loginReq);
 }
