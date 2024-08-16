@@ -96,6 +96,8 @@ public class RegisterServiceImpl implements RegisterService {
      * @param userId 用户ID
      */
     private void processAfterRegister(Long userId){
-        TransactionUtil.registryAfterCommitOrImmediatelyRun(() -> SpringUtil.publishEvent(new NoticeEvent<>(this, NoticeTypeEnum.REGISTER, userId)));
+        TransactionUtil.registryAfterCommitOrImmediatelyRun(() ->
+                SpringUtil.publishEvent(new NoticeEvent<>(this, NoticeTypeEnum.REGISTER, userId))
+        );
     }
 }

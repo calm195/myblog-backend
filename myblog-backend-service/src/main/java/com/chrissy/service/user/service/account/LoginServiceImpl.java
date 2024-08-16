@@ -5,7 +5,6 @@ import com.chrissy.service.user.helper.MyPasswordEncoder;
 import com.chrissy.service.user.helper.UserSessionHelper;
 import com.chrissy.service.user.repository.dao.UserAccountDao;
 import com.chrissy.service.user.repository.entity.po.UserAccountPO;
-import com.chrissy.service.user.repository.entity.vo.UserPwdLoginReq;
 import com.chrissy.service.user.service.LoginService;
 import com.chrissy.service.user.service.RegisterService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.chrissy.service.user.repository.entity.vo;
+package com.chrissy.service.user.repository.entity.req;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
