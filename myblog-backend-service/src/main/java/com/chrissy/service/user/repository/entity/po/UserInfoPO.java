@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 public class UserInfoPO extends BasePO {
     private Long userId;
 
-    private String nickName;
+    private String nickname;
     private String photo;
     private String profile;
 

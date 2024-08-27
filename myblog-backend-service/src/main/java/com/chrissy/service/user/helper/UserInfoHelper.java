@@ -63,7 +63,7 @@ public class UserInfoHelper {
      *
      * @return 随机生成的昵称
      */
-    public static String generateNickName() {
+    public static String generateNickname() {
         int decorateIndex = RANDOM.nextInt(NAME_DECORATE.length);
         int bodyIndex = RANDOM.nextInt(NAME_BODY.length);
         return NAME_DECORATE[decorateIndex] + NAME_BODY[bodyIndex];

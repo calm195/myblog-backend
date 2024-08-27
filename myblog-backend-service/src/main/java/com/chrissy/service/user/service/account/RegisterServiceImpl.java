@@ -59,7 +59,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         UserInfoPO userInfoPo = new UserInfoPO();
         userInfoPo.setUserId(userAccountPo.getId());
-        userInfoPo.setNickName(UserInfoHelper.generateNickName());
+        userInfoPo.setNickname(UserInfoHelper.generateNickname());
         userInfoPo.setPhoto(UserInfoHelper.generateAvatar());
         userInfoDao.saveUserInfo(userInfoPo);
 
@@ -83,7 +83,7 @@ public class RegisterServiceImpl implements RegisterService {
         UserInfoPO userInfoPo = new UserInfoPO();
         userInfoPo.setUserId(userAccountPo.getId());
         // todo: 获取微信昵称头像？
-        userInfoPo.setNickName(UserInfoHelper.generateNickName());
+        userInfoPo.setNickname(UserInfoHelper.generateNickname());
         userInfoPo.setPhoto(UserInfoHelper.generateAvatar());
         userInfoDao.saveUserInfo(userInfoPo);
 
