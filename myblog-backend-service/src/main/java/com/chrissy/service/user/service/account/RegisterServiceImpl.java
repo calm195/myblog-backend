@@ -5,6 +5,7 @@ import com.chrissy.core.util.TransactionUtil;
 import com.chrissy.model.enums.notice.NoticeTypeEnum;
 import com.chrissy.model.enums.user.LoginTypeEnum;
 import com.chrissy.model.event.NoticeEvent;
+import com.chrissy.model.vo.user.login.password.UserPwdRegisterReq;
 import com.chrissy.service.user.helper.MyPasswordEncoder;
 import com.chrissy.service.user.helper.UserInfoHelper;
 import com.chrissy.service.user.repository.dao.UserAccountDao;
@@ -12,6 +13,7 @@ import com.chrissy.service.user.repository.dao.UserInfoDao;
 import com.chrissy.service.user.repository.entity.po.UserAccountPO;
 import com.chrissy.service.user.repository.entity.po.UserInfoPO;
 import com.chrissy.service.user.service.RegisterService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,30 +39,42 @@ public class RegisterServiceImpl implements RegisterService {
 
     /**
      * 根据用户名密码方式登录，自动生成昵称和头像，触发事件通知
-     * @param username 用户名
-     * @param password 密码
+     * @param registerReq 用户请求体
      * @return 用户id
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long registerByUsernameAndPassword(String username, String password) {
-        UserAccountPO userAccountPo = userAccountDao.getByUserName(username);
+    public Long registerByUsernameAndPassword(UserPwdRegisterReq registerReq) {
+        UserAccountPO userAccountPo = userAccountDao.getByUserName(registerReq.getUsername());
         if (userAccountPo != null){
             // todo: exception already registered.
             return -1L;
         }
 
         userAccountPo = new UserAccountPO();
-        userAccountPo.setUsername(username);
-        userAccountPo.setPassword(passwordEncoder.encodePassword(password));
+        userAccountPo.setUsername(registerReq.getUsername());
+        userAccountPo.setPassword(passwordEncoder.encodePassword(registerReq.getPassword()));
         userAccountPo.setThirdAccountId("");
         userAccountPo.setLoginType(LoginTypeEnum.USERNAME.getCode());
         userAccountDao.saveUserAccount(userAccountPo);
 
         UserInfoPO userInfoPo = new UserInfoPO();
         userInfoPo.setUserId(userAccountPo.getId());
-        userInfoPo.setNickname(UserInfoHelper.generateNickname());
-        userInfoPo.setPhoto(UserInfoHelper.generateAvatar());
+        if (StringUtils.isNotBlank(registerReq.getNickname())){
+            userInfoPo.setNickname(registerReq.getNickname());
+        } else {
+            userInfoPo.setNickname(UserInfoHelper.generateNickname());
+        }
+        if (StringUtils.isNotBlank(registerReq.getPhoto())) {
+            userInfoPo.setPhoto(registerReq.getPhoto());
+        } else {
+            userInfoPo.setPhoto(UserInfoHelper.generateAvatar());
+        }
+        if (StringUtils.isNotBlank(registerReq.getProfile())) {
+            userInfoPo.setProfile(registerReq.getProfile());
+        } else {
+            userInfoPo.setProfile("Please input your profile");
+        }
         userInfoDao.saveUserInfo(userInfoPo);
 
         processAfterRegister(userAccountPo.getId());

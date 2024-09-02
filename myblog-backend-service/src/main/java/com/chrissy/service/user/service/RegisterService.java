@@ -1,5 +1,7 @@
 package com.chrissy.service.user.service;
 
+import com.chrissy.model.vo.user.login.password.UserPwdRegisterReq;
+
 /**
  * 用户注册服务
  * @author chrissy
@@ -8,11 +10,10 @@ package com.chrissy.service.user.service;
 public interface RegisterService {
     /**
      * 通过用户名密码注册
-     * @param username 用户名
-     * @param password 密码
+     * @param userPwdRegisterReq 用户注册请求体
      * @return 用户id
      */
-    Long registerByUsernameAndPassword(String username, String password);
+    Long registerByUsernameAndPassword(UserPwdRegisterReq userPwdRegisterReq);
 
     /**
      * 通过微信账公众号注册，绑定微信

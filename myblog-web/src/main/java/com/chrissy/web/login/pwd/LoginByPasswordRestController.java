@@ -6,15 +6,13 @@ import com.chrissy.core.util.CookieUtil;
 import com.chrissy.model.context.ReqInfoContext;
 import com.chrissy.model.res.Result;
 import com.chrissy.model.res.WebStateEnum;
+import com.chrissy.model.vo.user.login.password.UserPwdRegisterReq;
 import com.chrissy.service.user.repository.entity.req.UserPwdLoginReq;
 import com.chrissy.service.user.service.LoginService;
 import com.chrissy.service.user.service.RegisterService;
 import liquibase.pro.packaged.B;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +34,9 @@ public class LoginByPasswordRestController {
     private RegisterService registerService;
 
     @PostMapping("/login/username")
-    public Result<Boolean> login(@RequestParam(name = "username") String username,
-                                 @RequestParam(name = "password") String password,
+    public Result<Boolean> login(@RequestBody UserPwdLoginReq loginReq,
                                  HttpServletResponse response){
-        String session = loginService.loginByUsernameAndPassword(username, password);
+        String session = loginService.loginByUsernameAndPassword(loginReq.getUsername(), loginReq.getPassword());
         if (StringUtils.isNotBlank(session)) {
             response.addCookie(CookieUtil.newCookie(LoginService.SESSION_KEY, session));
             return Result.ok(true);
@@ -51,14 +48,13 @@ public class LoginByPasswordRestController {
 
     // todo 注册时应该有更多信息传入
     @PostMapping("/register/username")
-    public Result<String> register(@RequestParam(name = "username") String username,
-                                    @RequestParam(name = "password") String password,
-                                    HttpServletResponse response){
-        Long userId = registerService.registerByUsernameAndPassword(username, password);
+    public Result<String> register(@RequestBody UserPwdRegisterReq registerReq,
+                                   HttpServletResponse response){
+        Long userId = registerService.registerByUsernameAndPassword(registerReq);
         if (userId == null) {
             return Result.fail(WebStateEnum.LOGIN_FAILED_MIXED, "注册失败");
         } else {
-            return Result.ok(username);
+            return Result.ok(registerReq.getNickname());
         }
     }
 
