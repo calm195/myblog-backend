@@ -46,7 +46,6 @@ public class LoginByPasswordRestController {
         }
     }
 
-    // todo 注册时应该有更多信息传入
     @PostMapping("/register/username")
     public Result<String> register(@RequestBody UserPwdRegisterReq registerReq,
                                    HttpServletResponse response){
